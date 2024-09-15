@@ -31,12 +31,12 @@ public class InteractionHandler(
     private async Task ReadyAsync()
     {
         //Use this if you want the bot to register commands across every server
-        //await handler.RegisterCommandsGloballyAsync(true);
+        await handler.RegisterCommandsGloballyAsync(true);
         
         // Use this if you want commands to just be registered to your server
-        await handler
-            .RegisterCommandsToGuildAsync(649125115287830547)
-            .ConfigureAwait(false);
+        // await handler
+        //     .RegisterCommandsToGuildAsync(your guild here)
+        //     .ConfigureAwait(false);
     }
 
     private async Task HandleInteraction(SocketInteraction interaction)
