@@ -22,7 +22,7 @@ using IHost host = Host.CreateDefaultBuilder(args)
             AlwaysDownloadUsers = true,
             LogLevel = LogSeverity.Info
         }));
-        services.AddSingleton<InteractionService>();
+        services.AddSingleton<InteractionService>(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()));
         services.AddSingleton<InteractionHandler>();
         services.AddSingleton<CommandService>();
         services.AddLogging(hostContext => hostContext.AddConsole());
@@ -37,11 +37,12 @@ using IHost host = Host.CreateDefaultBuilder(args)
         });
         services.AddHostedService<StartupService>();
     })
+    
     .Build();
 
-Lavalink.Start();
+    Lavalink.Start();
 
-var audioService = host.Services.GetRequiredService<IAudioService>();
-await host.Services.GetRequiredService<InteractionHandler>().InitializeAsync();
+    var audioService = host.Services.GetRequiredService<IAudioService>();
+    await host.Services.GetRequiredService<InteractionHandler>().InitializeAsync();
     
-await host.RunAsync();
+    await host.RunAsync();
